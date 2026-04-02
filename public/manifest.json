@@ -1,0 +1,21 @@
+{
+  "name": "WinStreak - Habit Tracker",
+  "short_name": "WinStreak",
+  "description": "Gamified Habit Tracker for Productivity and Focus",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#11121a",
+  "theme_color": "#00f0ff",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

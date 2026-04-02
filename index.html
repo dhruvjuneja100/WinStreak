@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+      <meta name="theme-color" content="#6e54f7" />
+      <title>WinStreak</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="/src/css/style.css">
+    </head>
+    <body>
+    <div class="container">
+      <!-- Universal Header -->
+      <nav class="top-nav">
+        <div class="logo">
+          <a href="#" id="link-home"><h2><span class="logo-dot"></span>Win<span class="text-gradient">Streak</span></h2></a>
+        </div>
+        <button id="hamburger-btn" class="hamburger-btn hidden" aria-label="Toggle Navigation Menu" title="Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="nav-right" id="nav-right">
+          <span id="user-title-badge" class="title-badge hidden"></span>
+          <div id="user-stats" class="hidden user-stats-nav">
+            <span class="level-indicator">Lvl <span id="user-level">1</span></span>
+            <div class="xp-bar-container"><div id="xp-bar-fill" class="xp-bar-fill"></div></div>
+            <span class="freeze-pill" title="Ice Shields (Streak Freezes)">❄️ <span id="user-freezes">0</span></span>
+          </div>
+          <span id="user-greeting" class="hidden"></span>
+          <button id="btn-logout" class="glass-button logout-btn hidden">Logout</button>
+          <button id="theme-toggle" class="icon-button" aria-label="Toggle Theme">
+            <svg id="moon-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </button>
+        </div>
+      </nav>
+      <div id="motivational-quote" class="motivational-quote hidden"></div>
+      <!-- Streak Reminder Card -->
+      <div id="danger-banner" class="reminder-card hidden">
+        <div class="reminder-content">
+          <div class="reminder-icon">⚠️</div>
+          <div class="reminder-body">
+            <div class="reminder-title" id="danger-text">Don't break your streak!</div>
+            <div class="reminder-sub" id="danger-sub">You're so close — keep going!</div>
+          </div>
+          <button id="btn-danger-action" class="primary-button reminder-cta">Complete Now</button>
+          <button id="btn-dismiss-danger" class="icon-button reminder-close">✕</button>
+        </div>
+      </div>
+
+      <!-- Auth View -->
+      <div id="auth-view" class="view section-active">
+        <div class="auth-card glass-panel">
+          <div class="auth-orb">⚡</div>
+          <h2>Welcome to <span class="text-gradient">WinStreak</span></h2>
+          <p class="subtitle auth-sub">Build habits. Earn trophies. Stay consistent.</p>
+          <form id="auth-form">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" required placeholder="Enter username">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" required placeholder="Enter password">
+            </div>
+            <button type="submit" class="primary-button full-width">Login / Register</button>
+            <p id="auth-error" class="error-text"></p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Dashboard View -->
+      <div id="dashboard-view" class="view section-hidden">
+        <div class="dashboard-header">
+          <div>
+            <h1>Your <span class="text-gradient">Streaks</span></h1>
+            <p class="subtitle">Track your goals and stay consistent every day.</p>
+          </div>
+          <!-- Multi Exam Countdown Bar -->
+          <div id="dday-bar" class="dday-bar"></div>
+          <div class="dashboard-actions">
+            <button id="btn-start-focus" class="focus-mode-btn">🔒 Focus Mode</button>
+            <button id="btn-show-trophies" class="secondary-button">🏆 Trophy Wall</button>
+            <button id="btn-show-templates" class="secondary-button">📚 Templates</button>
+            <button id="btn-create-new" class="primary-button">+ New Streak</button>
+          </div>
+        </div>
+        
+        <div id="streaks-list" class="cards-grid"></div>
+
+        <div class="analytics-section glass-panel">
+          <h3>Analytics & Insights</h3>
+          <div class="chart-container">
+             <canvas id="progress-chart"></canvas>
+          </div>
+          <div class="weekly-report glass-panel-inner">
+             <h4>This Week's Report</h4>
+             <div id="weekly-report-content" class="weekly-report-content">Loading...</div>
+          </div>
+        </div>
+
+        <div class="heatmap-section glass-panel">
+          <h3>Heat Vision (Activity)</h3>
+          <div id="heatmap-grid" class="heatmap-grid"></div>
+        </div>
+      </div>
+
+      <!-- Streak Detail View -->
+      <div id="streak-view" class="view section-hidden">
+        <header class="glass-panel">
+          <div class="view-actions">
+            <button id="btn-back" class="icon-button back-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              Dashboard
+            </button>
+            <span id="streak-deadline-badge" class="badge">Deadline: ---</span>
+          </div>
+          <div class="header-content">
+            <div>
+              <h1 id="streak-title" class="text-gradient">Streak Title</h1>
+              <p id="streak-subtitle" class="subtitle">Stay consistent.</p>
+            </div>
+            <div class="stats">
+              <div class="stat-box glass-panel-inner">
+                <span class="stat-label">Consecutive</span>
+                <span class="stat-value" id="streak-count">0</span>
+              </div>
+              <div class="stat-box glass-panel-inner">
+                <span class="stat-label">Progress</span>
+                <span class="stat-value" id="completed-count">0/100</span>
+              </div>
+            </div>
+          </div>
+          <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+        </header>
+        <main>
+          <div id="grid-container" class="grid"></div>
+          <div id="checklist-panel" class="checklist-container hidden">
+            <div class="checklist-header">
+              <h3 id="checklist-title">Day Tasks</h3>
+              <div class="checklist-header-actions">
+                <button id="btn-carry-forward" class="icon-button hidden" title="Carry forward unfinished tasks from previous day">➡️</button>
+                <span id="checklist-progress" class="badge">0/0</span>
+              </div>
+            </div>
+            <div id="checklist-list" class="checklist-list"></div>
+            <div class="task-input-wrapper">
+              <input type="text" id="new-task-input" class="task-input" placeholder="Add a new task..." />
+              <button id="btn-add-task" class="primary-button">+</button>
+            </div>
+          </div>
+        </main>
+        <footer><button id="btn-delete" class="glass-button">Delete Streak</button></footer>
+      </div>
+
+      <!-- Developer Credit -->
+      <footer class="dev-footer">
+        <p>Developed by <strong>Dhruv Juneja</strong></p>
+      </footer>
+    </div>
+
+    <!-- Create Modal -->
+    <div id="create-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel">
+        <div class="modal-header">
+          <h2>Create New Streak</h2>
+          <button id="btn-close-modal" class="icon-button">✕</button>
+        </div>
+        <form id="create-form">
+          <div class="form-group">
+            <label for="topic">Topic / Goal Name</label>
+            <input type="text" id="topic" required placeholder="e.g. Reading, Gym, Coding" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="target-days">Target Days</label>
+              <input type="number" id="target-days" required min="1" max="365" value="100" />
+            </div>
+            <div class="form-group">
+              <label for="streak-icon">Icon</label>
+              <div class="emoji-picker" id="emoji-picker">
+                <button type="button" class="emoji-btn selected" data-emoji="🔥">🔥</button>
+                <button type="button" class="emoji-btn" data-emoji="📚">📚</button>
+                <button type="button" class="emoji-btn" data-emoji="💪">💪</button>
+                <button type="button" class="emoji-btn" data-emoji="🧠">🧠</button>
+                <button type="button" class="emoji-btn" data-emoji="💻">💻</button>
+                <button type="button" class="emoji-btn" data-emoji="🎯">🎯</button>
+                <button type="button" class="emoji-btn" data-emoji="✍️">✍️</button>
+                <button type="button" class="emoji-btn" data-emoji="🏃">🏃</button>
+                <button type="button" class="emoji-btn" data-emoji="🎸">🎸</button>
+                <button type="button" class="emoji-btn" data-emoji="🧘">🧘</button>
+                <button type="button" class="emoji-btn" data-emoji="💊">💊</button>
+                <button type="button" class="emoji-btn" data-emoji="🥗">🥗</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="deadline">Target Deadline (or Exam Date)</label>
+            <input type="date" id="deadline" required />
+          </div>
+          <div class="form-group checkbox-group">
+             <input type="checkbox" id="is-dday" />
+             <label for="is-dday">Set as Main Exam Countdown (D-Day)</label>
+          </div>
+          <button type="submit" class="primary-button full-width">Start Tracking</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Templates Modal -->
+    <div id="templates-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel modal-wide">
+        <div class="modal-header">
+          <h2>📚 Study Stacks — Quick Templates</h2>
+          <button id="btn-close-templates" class="icon-button">✕</button>
+        </div>
+        <div class="templates-grid" id="templates-grid"></div>
+      </div>
+    </div>
+
+    <!-- Trophy Wall Modal -->
+    <div id="trophy-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel modal-wide">
+        <div class="modal-header">
+          <h2>🏆 Trophy Wall</h2>
+          <button id="btn-close-trophies" class="icon-button">✕</button>
+        </div>
+        <div class="badges-grid" id="badges-grid"></div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel modal-confirm">
+        <h2>Delete this streak?</h2>
+        <p class="subtitle">This action is permanent and cannot be undone.</p>
+        <div class="modal-actions">
+          <button id="btn-cancel-delete" class="glass-button">Cancel</button>
+          <button id="btn-confirm-delete" class="primary-button danger-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Congratulations Modal -->
+    <div id="congrats-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel modal-confirm">
+        <h1 class="text-gradient congrats-title">Congratulations!</h1>
+        <p class="subtitle">You've successfully completed this streak! Incredible consistency.</p>
+        <button id="btn-close-congrats" class="primary-button full-width">Awesome!</button>
+      </div>
+    </div>
+
+    <!-- Focus Fusion (Pomodoro) Floating Button -->
+    <button id="btn-focus-fusion" class="floating-btn hidden">⏱️ Focus</button>
+
+    <!-- Focus Fusion Modal -->
+    <div id="pomodoro-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel modal-confirm">
+        <div class="modal-header">
+          <h2>Focus Fusion</h2>
+          <button id="btn-close-pomodoro" class="icon-button">✕</button>
+        </div>
+        <div class="pomodoro-timer" id="pomodoro-display">25:00</div>
+        <p class="subtitle">Stay focused. Link to a streak below to log a day when done.</p>
+        <div class="form-group">
+          <select id="pomodoro-streak-select" class="pomodoro-select">
+            <option value="">-- Don't link to any streak --</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button id="btn-pomodoro-start" class="primary-button">Start Focus</button>
+          <button id="btn-pomodoro-reset" class="glass-button hidden">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focus Mode Overlay -->
+    <div id="focus-overlay" class="focus-overlay hidden">
+      <div class="focus-overlay-glow"></div>
+      <div class="focus-overlay-content">
+        <div class="focus-lock-icon">🔒</div>
+        <h1 class="focus-timer-display" id="focus-timer-display">25:00</h1>
+        <div class="focus-progress-bar-container">
+          <div class="focus-progress-bar" id="focus-progress-bar"></div>
+        </div>
+        <p class="focus-quote" id="focus-quote">Stay disciplined. Stay focused.</p>
+        <div class="focus-blocklist" id="focus-blocklist-display"></div>
+        <div class="focus-actions">
+          <button id="btn-end-focus" class="glass-button focus-end-btn">🔓 End Focus Mode</button>
+          <p class="focus-hint">Press <kbd>Esc</kbd> to exit</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focus Mode Settings Modal -->
+    <div id="focus-settings-modal" class="modal-overlay hidden">
+      <div class="modal glass-panel focus-settings-modal">
+        <div class="modal-header">
+          <div>
+            <h2>🔒 Focus Mode</h2>
+            <p class="subtitle" style="margin-top:.2rem;">Set your session and block distractions</p>
+          </div>
+          <button id="btn-close-focus-settings" class="icon-button">✕</button>
+        </div>
+
+        <!-- Duration Section -->
+        <div class="focus-section">
+          <div class="focus-section-label">⏱ Session Duration</div>
+          <div class="focus-presets" id="focus-presets">
+            <button class="focus-preset-btn" data-min="5">5m</button>
+            <button class="focus-preset-btn" data-min="10">10m</button>
+            <button class="focus-preset-btn focus-preset-active" data-min="25">25m</button>
+            <button class="focus-preset-btn" data-min="45">45m</button>
+            <button class="focus-preset-btn" data-min="60">1h</button>
+            <button class="focus-preset-btn" data-min="90">1.5h</button>
+            <button class="focus-preset-btn" data-min="120">2h</button>
+          </div>
+          <div class="focus-custom-duration">
+            <div class="focus-custom-duration-label">Or enter custom:</div>
+            <div class="focus-duration-input-wrap">
+              <input type="number" id="focus-duration" min="1" max="480" value="25" placeholder="25" />
+              <span class="focus-duration-unit">minutes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Block Categories -->
+        <div class="focus-section">
+          <div class="focus-section-label">🚫 Block Categories</div>
+          <div class="focus-categories" id="focus-categories">
+            <label class="focus-cat-label">
+              <input type="checkbox" value="social" checked />
+              <span class="focus-cat-icon">📱</span>
+              <span class="focus-cat-info">
+                <span class="focus-cat-name">Social Media</span>
+                <span class="focus-cat-sites">Instagram, Facebook, TikTok, Twitter/X, Snapchat</span>
+              </span>
+            </label>
+            <label class="focus-cat-label">
+              <input type="checkbox" value="entertainment" checked />
+              <span class="focus-cat-icon">🎥</span>
+              <span class="focus-cat-info">
+                <span class="focus-cat-name">Entertainment</span>
+                <span class="focus-cat-sites">YouTube, Netflix, Twitch, Prime Video, Disney+</span>
+              </span>
+            </label>
+            <label class="focus-cat-label">
+              <input type="checkbox" value="gaming" checked />
+              <span class="focus-cat-icon">🎮</span>
+              <span class="focus-cat-info">
+                <span class="focus-cat-name">Gaming</span>
+                <span class="focus-cat-sites">Steam, Discord, Epic Games, Roblox, IGN</span>
+              </span>
+            </label>
+            <label class="focus-cat-label">
+              <input type="checkbox" value="shopping" />
+              <span class="focus-cat-icon">🛍️</span>
+              <span class="focus-cat-info">
+                <span class="focus-cat-name">Shopping</span>
+                <span class="focus-cat-sites">Amazon, eBay, Flipkart, AliExpress, Myntra</span>
+              </span>
+            </label>
+            <label class="focus-cat-label">
+              <input type="checkbox" value="news" />
+              <span class="focus-cat-icon">📰</span>
+              <span class="focus-cat-info">
+                <span class="focus-cat-name">News & Reddit</span>
+                <span class="focus-cat-sites">Reddit, CNN, BBC, Times of India, NDTV</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Custom Sites -->
+        <div class="focus-section">
+          <div class="focus-section-label">✏️ Custom Sites to Block</div>
+          <textarea id="focus-custom-sites" rows="3"
+            placeholder="whatsapp.com&#10;twitter.com&#10;9gag.com" class="focus-textarea"></textarea>
+          <p class="focus-note">One domain per line. These will be flagged if you try to visit them.</p>
+        </div>
+
+        <!-- Mobile Blocking Guide -->
+        <div class="focus-section focus-mobile-guide">
+          <div class="focus-section-label">📱 Block Apps on Mobile</div>
+          <div class="mobile-guide-cards">
+            <div class="mobile-guide-card">
+              <div class="mobile-guide-icon">🤖</div>
+              <div class="mobile-guide-info">
+                <div class="mobile-guide-title">Android</div>
+                <div class="mobile-guide-desc">Settings → Digital Wellbeing → App Timers / Focus Mode. Or use <strong>ActionDash</strong> or <strong>StayFree</strong> apps.</div>
+              </div>
+            </div>
+            <div class="mobile-guide-card">
+              <div class="mobile-guide-icon">🍎</div>
+              <div class="mobile-guide-info">
+                <div class="mobile-guide-title">iPhone</div>
+                <div class="mobile-guide-desc">Settings → Screen Time → App Limits. Add Instagram, TikTok, YouTube with a 0-minute limit during study sessions.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-activate-focus" class="primary-button full-width focus-activate-btn">🔒 Start Focus Session</button>
+      </div>
+    </div>
+
+
+    <script type="module" src="/src/js/app.js"></script>
+  </body>
+</html>

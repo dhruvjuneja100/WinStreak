@@ -1,0 +1,18 @@
+/* Gamification & Community Phase 4 */
+.community-row { align-items: flex-start; }
+.community-panel { flex: 1; min-width: 300px; }
+.community-panel-title { margin-bottom: 1rem; }
+.community-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.community-actions { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.community-input { min-width: 0; flex: 1; }
+.community-btn { padding: 0.75rem; }
+.primary-community-btn { margin-top: 0; }
+
+.leaderboard-item, .group-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(0,0,0,0.1); padding: 0.75rem 1rem; border-radius: 12px;
+}
+.leaderboard-item-rank { font-weight: 800; font-size: 1.2rem; color: var(--accent-1); width: 30px; }
+.leaderboard-item-info { flex: 1; }
+.leaderboard-item-xp { font-weight: 600; color: var(--accent-2); }
+.group-code { font-family: monospace; background: rgba(0,0,0,0.2); padding: 0.2rem 0.4rem; border-radius: 4px; }
